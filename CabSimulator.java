@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.*;
 
-//  SIMPLE USER MODEL
 class User {
     String username, password, name, phone;
 
@@ -21,7 +20,7 @@ class User {
     }
 }
 
-//  SIMPLE DRIVER MODEL + THREAD (multithreading)
+
 class Driver implements Runnable {
     String name, phone;
     volatile boolean available = true;
@@ -39,18 +38,16 @@ class Driver implements Runnable {
     }
 }
 
-//  JDBC MANAGER
 class DB {
     static Connection getConnection() throws Exception {
         String url = "jdbc:mysql://localhost:3306/cabsimulator";
         String user = "root";
-        String pass = "srikesav9@";
+        String pass = "your_password";
         Class.forName("com.mysql.cj.jdbc.Driver");
         return DriverManager.getConnection(url, user, pass);
     }
 }
 
-//  DRIVER POOL (Collections + Multithreading)
 class DriverPool {
     private BlockingQueue<Driver> queue = new LinkedBlockingQueue<>();
 
@@ -70,7 +67,6 @@ class DriverPool {
 
         d.available = false;
 
-        // update DB
         try (Connection con = DB.getConnection();
              PreparedStatement ps = con.prepareStatement(
                      "UPDATE drivers SET available=FALSE WHERE name=?")) {
@@ -94,7 +90,6 @@ class DriverPool {
     }
 }
 
-//  AUTHENTICATION
 class AuthManager {
     public User login(String u, String p) throws Exception {
         try (Connection con = DB.getConnection();
@@ -138,7 +133,6 @@ class AuthManager {
     }
 }
 
-//  LOGIN SCREEN
 class LoginFrame extends JFrame {
     AuthManager auth;
     DriverPool pool;
@@ -188,7 +182,6 @@ class LoginFrame extends JFrame {
     }
 }
 
-//  SIGNUP SCREEN
 class SignupFrame extends JFrame {
     AuthManager auth;
     DriverPool pool;
@@ -244,7 +237,6 @@ class SignupFrame extends JFrame {
     }
 }
 
-//  BOOKING SCREEN
 class BookingFrame extends JFrame {
     User user;
     DriverPool pool;
@@ -336,7 +328,6 @@ class BookingFrame extends JFrame {
     }
 }
 
-//  PROFILE SCREEN
 class ProfileFrame extends JFrame {
     public ProfileFrame(User u, DriverPool pool) {
         setTitle("Profile");
@@ -356,7 +347,6 @@ class ProfileFrame extends JFrame {
     }
 }
 
-//  TRIP HISTORY SCREEN
 class HistoryFrame extends JFrame {
     public HistoryFrame(User u) {
         setTitle("Trip History");
@@ -395,7 +385,6 @@ class HistoryFrame extends JFrame {
     }
 }
 
-//  MAIN: INITIALIZE DRIVERS, LAUNCH APP
 public class CabSimulator {
     public static void main(String[] args) {
 
@@ -420,3 +409,4 @@ public class CabSimulator {
                 new LoginFrame(auth, pool).setVisible(true));
     }
 }
+
