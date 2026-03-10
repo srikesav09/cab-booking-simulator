@@ -40,11 +40,15 @@ class Driver implements Runnable {
 
 class DB {
     static Connection getConnection() throws Exception {
+        //Eample connection format
+        /*
         String url = "jdbc:mysql://localhost:3306/cabsimulator";
         String user = "root";
         String pass = "your_password";
         Class.forName("com.mysql.cj.jdbc.Driver");
         return DriverManager.getConnection(url, user, pass);
+        */
+        
     }
 }
 
@@ -409,4 +413,5 @@ public class CabSimulator {
                 new LoginFrame(auth, pool).setVisible(true));
     }
 }
+
 
